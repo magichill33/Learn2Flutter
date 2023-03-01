@@ -35,6 +35,11 @@ class _HomePageState extends State<HomePage> {
                 arguments: {"title": "我是命名路由传值", "aid": 20});
               },
               child: const Text("命名路由传值")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/dialog");
+              },
+              child: const Text("对话框模块")),
         ],
       ),
     );

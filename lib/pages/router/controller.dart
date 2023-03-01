@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../dialog/dialog.dart';
 import '../form.dart';
 import '../news.dart';
 import '../routers.dart';
@@ -11,7 +12,8 @@ final Map<String, Function> routers = {
   "/search": (context) => const SearchPage(),
   "/form": (context, {arguments}) => FormPage(
         arguments: arguments,
-      )
+      ),
+  "/dialog": (context, {arguments}) => DialogPage(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {
