@@ -5,15 +5,25 @@ import '../form.dart';
 import '../news.dart';
 import '../routers.dart';
 import '../search.dart';
+import '../page_view.dart';
+import '../../tools/config.dart';
+import '../page_view.dart';
+import '../page_view_builder.dart';
+import '../page_view_full.dart';
+import '../page_view_swiper.dart';
 
 final Map<String, Function> routers = {
-  "/": (context) => const Tabs(),
-  "/news": (context) => const NewsPage(),
-  "/search": (context) => const SearchPage(),
-  "/form": (context, {arguments}) => FormPage(
+  PageName.root.name: (context) => const Tabs(),
+  PageName.news.name: (context) => const NewsPage(),
+  PageName.search.name: (context) => const SearchPage(),
+  PageName.form.name: (context, {arguments}) => FormPage(
         arguments: arguments,
       ),
-  "/dialog": (context, {arguments}) => DialogPage(),
+  PageName.dialog.name: (context, {arguments}) => DialogPage(),
+  PageName.pageView.name: (context) => const PageViewPage(),
+  PageName.pageViewBuilder.name: (context) => const PageViewBuilderPage(),
+  PageName.pageViewFull.name: (context) => const PageViewFullPage(),
+  PageName.pageViewSwiper.name: (context) => const PageViewSwiper(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {

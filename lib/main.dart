@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './pages/router/controller.dart';
+import './tools/config.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: "News",
       theme: ThemeData(primarySwatch: Colors.lightBlue),
       //home: Tabs(),
-      initialRoute: "/",
+      initialRoute: PageName.root.name,
       // routes: {
       //   "/": (context) => const Tabs(),
       //   "/news": (context) => const NewsPage(),
