@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
-import './pages/router/controller.dart';
-import './tools/config.dart';
+
+import './nav2/mc_router.dart';
+
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "News",
-      theme: ThemeData(primarySwatch: Colors.lightBlue),
-      //home: Tabs(),
-      initialRoute: PageName.root.name,
-      // routes: {
-      //   "/": (context) => const Tabs(),
-      //   "/news": (context) => const NewsPage(),
-      //   "/search": (context) => const SearchPage(),
-      //   "/form": (context) => const FormPage()
-      // },
-      onGenerateRoute: onGenerateRoute,
+      title: "Nav2 Demo",
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: Router(
+        routerDelegate: router,
+        backButtonDispatcher: RootBackButtonDispatcher(),
+      ),
     );
   }
 }
