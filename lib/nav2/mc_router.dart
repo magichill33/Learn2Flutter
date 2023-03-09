@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'second_page.dart';
+import 'player_page.dart';
+import 'video_list.dart';
 
 McRouter router = McRouter();
 
@@ -16,6 +18,8 @@ class McRouter extends RouterDelegate<List<RouteSettings>>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<List<RouteSettings>> {
   static const String mainPage = '/main';
   static const String secondPage = '/second';
+  static const String playerPage = '/player';
+  static const String videoListPage = 'video_list';
 
   static const String key = 'key';
   static const String value = 'value';
@@ -41,7 +45,6 @@ class McRouter extends RouterDelegate<List<RouteSettings>>
   GlobalKey<NavigatorState> get navigatorKey {
     return GlobalKey<NavigatorState>();
   }
-
 
   @override
   Future<void> setNewRoutePath(List<RouteSettings> configuration) async {
@@ -88,6 +91,12 @@ class McRouter extends RouterDelegate<List<RouteSettings>>
         break;
       case secondPage:
         page = SecondPage(params: routeSettings.arguments?.toString() ?? '');
+        break;
+      case playerPage:
+        page = PlayerPage(routeSettings.arguments?.toString() ?? '');
+        break;
+      case videoListPage:
+        page = VideoList();
         break;
       default:
         page = const Scaffold();

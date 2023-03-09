@@ -17,11 +17,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // 1、创建一个MethodChanel实例，传入通道名称，名称需要和Native侧完全一致
   static const _channel = MethodChannel('methodChannel');
-
+  var url = 'https://sample-videos.com/video123/flv/240/big_buck_bunny_240p_10mb.flv';
   Future<void> _incrementCounter() async {
     print('Start second page');
-    var ack = await router.push(
-        name: McRouter.secondPage, arguments: 'Hello from mainPage');
+    // var ack = await router.push(
+    //     name: McRouter.playerPage, arguments: url);
+    var ack = await router.push(name: McRouter.videoListPage, arguments: 'Hello from mainPage');
     print('Ack: $ack');
   }
 
