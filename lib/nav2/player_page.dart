@@ -89,7 +89,7 @@ class _PlayerPageState extends State<PlayerPage> {
       url,
       savePath,
       onReceiveProgress: (count, total) {
-        if (count%10 == 0) {
+        if (count%100 == 0) {
           var progress = '${(count / total * 100).toInt()}%';
           print('ly-flutter: $progress');
         }
