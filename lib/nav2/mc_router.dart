@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'second_page.dart';
 import 'player_page.dart';
-import 'video_list.dart';
+import '../video_page/video_list.dart';
 
 McRouter router = McRouter();
 
