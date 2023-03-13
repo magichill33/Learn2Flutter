@@ -14,7 +14,7 @@ class Player extends FijkPlayer {
     if (type == SourceType.asset && !url.startsWith(asset_url_suffix)) {
       url = asset_url_suffix + url;
     }
-    print("setCommonDataSource: $url");
+    print("ly-setCommonDataSource: $url");
     setDataSource(url, autoPlay: autoPlay, showCover: showCover);
   }
 

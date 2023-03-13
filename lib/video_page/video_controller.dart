@@ -1,19 +1,19 @@
 import 'dart:convert';
 
+import 'package:fluttertest/video_page/server_data.dart';
 import 'package:fluttertest/video_page/video_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VideoController {
-  // 本地mock数据，实际上是模拟网络数据
-  static const _serverData = """{
-    "title": "示例视频",
-    "url": "https://sample-videos.com/video123/flv/240/big_buck_bunny_240p_10mb.flv",
-    "playCount": 88
-  }""";
+  VideoModel? model;
 
-  late VideoModel model;
-
-  void init() {
-    model = fetchVideoData();
+  Future<void> init() async {
+    // 首先判断一级缓存——即内存中是否有数据
+    print('ly- init video controller');
+    if (model == null) {
+      print('ly- init model is null');
+      model = await fetchVideoData();
+    }
   }
 
   // 缺点：
@@ -21,7 +21,19 @@ class VideoController {
   // 2、需要保证map的字段和json的字段完全一致， 容易出错
 
   // 从服务端拉取视频Json字符串类型表示的视频数据
-  VideoModel fetchVideoData() {
-    return VideoModel.fromJson(jsonDecode(_serverData));
+  Future<VideoModel> fetchVideoData() async {
+    var sp = await SharedPreferences.getInstance();
+    var modelStr = sp.getString("videModel");
+    if (modelStr != null && modelStr.isEmpty) {
+      //从二级缓存中找到数据直接使用；
+      print('ly- 2/use sp data');
+      return VideoModel.fromJson(jsonDecode(modelStr));
+    } else {
+      var jsonStr = ServerData.fetchDataFromServer();
+      var model = jsonDecode(jsonStr);
+      sp.setString('videoModel', jsonStr);
+      print('ly- 3/fetch data from server');
+      return VideoModel.fromJson(model);
+    }
   }
 }

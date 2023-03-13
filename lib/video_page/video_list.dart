@@ -18,14 +18,19 @@ class _VideoListState extends State<VideoList> {
   void initState() {
     super.initState();
     _controller = VideoController();
-    _controller.init();
-    print('ly- title: ${_controller.model.title}');
-    print('ly- url: ${_controller.model.url}');
-    print('ly- playCount: ${_controller.model.playCount}');
+    _controller.init().then((value) {
+      print('ly-fresh data');
+      setState(() {});
+    });
+
+    print('ly- title: ${_controller.model?.title}');
+    print('ly- url: ${_controller.model?.url}');
+    print('ly- playCount: ${_controller.model?.playCount}');
   }
 
   @override
   Widget build(BuildContext context) {
+    print("ly-_VideoListState build model:${_controller.model}");
     return Scaffold(
         body: GridView.builder(
       gridDelegate:
@@ -38,15 +43,17 @@ class _VideoListState extends State<VideoList> {
         return GestureDetector(
           child: AbsorbPointer(
             absorbing: true,
-            child: VideoView(
-              Player()
-                ..setCommonDataSource('asset/videos/test.flv',
-                    type: SourceType.asset, autoPlay: true),
-            ),
+            child: _controller.model == null
+                ? Container() // 加载提示或者骨架屏
+                : VideoView(
+                    Player()
+                      ..setCommonDataSource(_controller.model?.url ?? "",
+                          type: SourceType.net, autoPlay: true),
+                  ),
           ),
           onTap: () => router.push(
             name: McRouter.playerPage,
-            arguments: _controller.model.url,
+            arguments: _controller.model?.url,
           ),
         );
       },
