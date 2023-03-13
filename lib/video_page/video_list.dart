@@ -22,20 +22,16 @@ class _VideoListState extends State<VideoList> {
       print('ly-fresh data');
       setState(() {});
     });
-
-    print('ly- title: ${_controller.model?.title}');
-    print('ly- url: ${_controller.model?.url}');
-    print('ly- playCount: ${_controller.model?.playCount}');
   }
 
   @override
   Widget build(BuildContext context) {
-    print("ly-_VideoListState build model:${_controller.model}");
+    print("ly-_VideoListState build model:${_controller.dataList}");
     return Scaffold(
         body: GridView.builder(
       gridDelegate:
           const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-      itemCount: 15,
+      itemCount: _controller.dataList?.length,
       itemBuilder: (context, index) {
         // 实际羡慕中， 通过dateList[index]取出url
         // var url =
@@ -43,17 +39,17 @@ class _VideoListState extends State<VideoList> {
         return GestureDetector(
           child: AbsorbPointer(
             absorbing: true,
-            child: _controller.model == null
+            child: _controller.dataList == null
                 ? Container() // 加载提示或者骨架屏
                 : VideoView(
                     Player()
-                      ..setCommonDataSource(_controller.model?.url ?? "",
+                      ..setCommonDataSource(_controller.dataList![index].url ?? "",
                           type: SourceType.net, autoPlay: true),
                   ),
           ),
           onTap: () => router.push(
             name: McRouter.playerPage,
-            arguments: _controller.model?.url,
+            arguments: _controller.dataList![index].url,
           ),
         );
       },
