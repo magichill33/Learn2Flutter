@@ -17,6 +17,7 @@ class _VideoViewState extends State<VideoView> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: GestureDetector(
+      onTap: _onTapVideo,
       child: Stack(
         children: [
           AbsorbPointer(
@@ -27,13 +28,12 @@ class _VideoViewState extends State<VideoView> {
           ),
           if (widget.player.state == FijkState.paused)
             Align(
+              alignment: Alignment.center,
               child:
                   Image.asset('asset/images/play.png', width: 70, height: 70),
-              alignment: Alignment.center,
             ),
         ],
       ),
-      onTap: _onTapVideo,
     ));
   }
 
@@ -53,5 +53,4 @@ class _VideoViewState extends State<VideoView> {
     super.dispose();
     widget.player.release();
   }
-
 }

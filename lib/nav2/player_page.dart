@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertest/favorite_page/favorite_gesture.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:player/player.dart';
@@ -23,30 +24,32 @@ class _PlayerPageState extends State<PlayerPage> {
     print('video url is :${widget.url}');
     player.setCommonDataSource(widget.url,
         type: SourceType.net, autoPlay: true);
-    return GestureDetector(
-      onLongPress: () async {
-        await showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text("提示"),
-              content: Text("要下载本视频吗"),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context, "取消"),
-                    child: const Text("取消")),
-                TextButton(
-                    child: const Text("确定"),
-                    onPressed: () {
-                      _saveVideo(widget.url);
-                      Navigator.pop(context, 'confirm');
-                    }),
-              ],
-            );
-          },
-        );
-      },
-      child: VideoView(player),
+    return FavoriteGesture(
+      child: GestureDetector(
+        onLongPress: () async {
+          await showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text("提示"),
+                content: const Text("要下载本视频吗"),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.pop(context, "取消"),
+                      child: const Text("取消")),
+                  TextButton(
+                      child: const Text("确定"),
+                      onPressed: () {
+                        _saveVideo(widget.url);
+                        Navigator.pop(context, 'confirm');
+                      }),
+                ],
+              );
+            },
+          );
+        },
+        child: VideoView(player),
+      ),
     );
   }
 
@@ -89,7 +92,7 @@ class _PlayerPageState extends State<PlayerPage> {
       url,
       savePath,
       onReceiveProgress: (count, total) {
-        if (count%100 == 0) {
+        if (count % 100 == 0) {
           var progress = '${(count / total * 100).toInt()}%';
           print('ly-flutter: $progress');
         }
